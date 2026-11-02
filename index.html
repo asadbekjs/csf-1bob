@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Computer Science Foundation — I bob nazorat testi</title>
+    <style>
+      :root {
+        --bg: #f3f5fa;
+        --card: #fff;
+        --tx: #1d2433;
+        --mut: #667085;
+        --pri: #3b5bdb;
+        --ok: #2b9348;
+        --bad: #d62839;
+        --line: #e3e7f0;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #12151d;
+          --card: #1c212d;
+          --tx: #eef1f8;
+          --mut: #9aa4b8;
+          --pri: #7b93ff;
+          --ok: #4cc26a;
+          --bad: #ff6b78;
+          --line: #2c3446;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font-family: "Segoe UI", Arial, sans-serif;
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 20px 14px 50px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 26px;
+      }
+      h2 {
+        margin: 0 0 14px;
+        font-size: 21px;
+        line-height: 1.4;
+      }
+      p {
+        margin: 6px 0;
+        color: var(--mut);
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 13px 14px;
+        font-size: 18px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--tx);
+        outline: none;
+      }
+      input[type="text"]:focus {
+        border-color: var(--pri);
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 22px;
+        background: var(--pri);
+        color: #fff;
+        font-weight: 600;
+      }
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid var(--pri);
+        outline-offset: 2px;
+      }
+      button.sec {
+        background: transparent;
+        color: var(--pri);
+        border: 2px solid var(--pri);
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+      .err {
+        color: var(--bad);
+        font-weight: 600;
+        min-height: 24px;
+        margin: 10px 0 0;
+      }
+      .vgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      @media (max-width: 520px) {
+        .vgrid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .vbtn {
+        text-align: left;
+        background: var(--bg);
+        color: var(--tx);
+        border: 2px solid var(--line);
+        padding: 16px;
+      }
+      .vbtn b {
+        display: block;
+        font-size: 19px;
+      }
+      .vbtn span {
+        color: var(--mut);
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .vbtn.sel {
+        border-color: var(--pri);
+        background: color-mix(in srgb, var(--pri) 14%, var(--bg));
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        color: var(--mut);
+        margin-bottom: 8px;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .bar {
+        height: 8px;
+        background: var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--pri);
+        transition: width 0.25s;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: var(--bg);
+        color: var(--pri);
+        border: 1px solid var(--line);
+        margin-bottom: 10px;
+      }
+      .opt {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin: 8px 0;
+        padding: 13px 16px;
+        background: var(--bg);
+        color: var(--tx);
+        border: 2px solid var(--line);
+        font-weight: 500;
+      }
+      .opt.sel {
+        border-color: var(--pri);
+        background: color-mix(in srgb, var(--pri) 14%, var(--bg));
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+      }
+      .dots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 18px;
+      }
+      .dots b {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        cursor: pointer;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        color: var(--mut);
+      }
+      .dots b.done {
+        background: color-mix(in srgb, var(--pri) 22%, var(--bg));
+        color: var(--tx);
+      }
+      .dots b.cur {
+        outline: 2px solid var(--pri);
+      }
+      .score {
+        text-align: center;
+        padding: 10px 0 18px;
+      }
+      .big {
+        font-size: 64px;
+        font-weight: 800;
+        color: var(--pri);
+        line-height: 1;
+      }
+      .stats {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 14px 0;
+      }
+      .stats div {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 18px;
+      }
+      .verdict {
+        text-align: center;
+        font-weight: 700;
+        margin: 6px 0 0;
+      }
+      .verdict.y {
+        color: var(--ok);
+      }
+      .verdict.n {
+        color: var(--bad);
+      }
+      .rv {
+        border-top: 1px solid var(--line);
+        border-left: 4px solid transparent;
+        padding: 12px 0 12px 12px;
+        font-size: 15px;
+      }
+      .rv.ok {
+        border-left-color: var(--ok);
+      }
+      .rv.bad {
+        border-left-color: var(--bad);
+      }
+      .rv .y {
+        color: var(--ok);
+        font-weight: 700;
+      }
+      .rv .n {
+        color: var(--bad);
+        font-weight: 700;
+      }
+      .rv small {
+        color: var(--mut);
+      }
+      #rv.onlybad .rv.ok {
+        display: none;
+      }
+      .hide {
+        display: none;
+      }
+      @media print {
+        .noprint {
+          display: none;
+        }
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .card {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="start" class="card">
+        <h1>💻 I bob nazorat testi</h1>
+        <p>
+          Computer Science Foundation, 8-sinf, I bob (1–6-mavzular: kompyuter savodxonligi va arxitekturasi). Har variantda <b>30 ta savol</b>:
+          <b>25 ta ochiq test</b> (variantdan tanlaysiz) va
+          <b>5 ta yopiq savol</b> (javobni oʻzingiz yozasiz).
+        </p>
+        <p>
+          Savollar har safar tasodifiy tartibda tushadi. Yozma savollarda
+          javobni qisqa yozing (1–3 soʻz, qisqartma yoki raqam). Katta-kichik
+          harf farq qilmaydi. Savollar orasida oldinga-orqaga oʻtish mumkin.
+        </p>
+        <p style="margin-top: 18px"><b>1. Ism va familiyangiz:</b></p>
+        <input
+          type="text"
+          id="name"
+          placeholder="Masalan: Aliyev Vali"
+          autocomplete="off"
+        />
+        <p style="margin-top: 18px"><b>2. Variantni tanlang:</b></p>
+        <div class="vgrid">
+          <button class="vbtn" data-v="1" type="button">
+            <b>1-variant</b><span>25 ochiq test + 5 yopiq savol</span>
+          </button>
+          <button class="vbtn" data-v="2" type="button">
+            <b>2-variant</b><span>25 ochiq test + 5 yopiq savol</span>
+          </button>
+        </div>
+        <div class="err" id="err" role="alert"></div>
+        <div class="nav" style="justify-content: flex-start; margin-top: 8px">
+          <button id="go">Testni boshlash →</button>
+        </div>
+      </div>
+
+      <div id="quiz" class="card hide">
+        <div class="top">
+          <span id="who"></span><span id="cnt"></span
+          ><span id="time">⏱ 00:00</span>
+        </div>
+        <div class="bar"><i id="pb"></i></div>
+        <div id="qbox"></div>
+        <div class="nav">
+          <button class="sec" id="prev">← Oldingi</button>
+          <button id="next">Keyingi →</button>
+        </div>
+        <div class="dots" id="dots"></div>
+        <div class="nav" style="justify-content: center">
+          <button class="sec" id="fin">✔ Testni yakunlash</button>
+        </div>
+      </div>
+
+      <div id="res" class="card hide"></div>
+    </div>
+
+    <script>
+      "use strict";
+      // ===== SOZLAMALAR =====
+      const POINTS_CHOICE = 3; // ochiq test (variantli): har biri 3 ball (25 x 3 = 75)
+      const POINTS_TEXT = 5; // yopiq savol (yozma): har biri 5 ball (5 x 5 = 25)
+      const PASS_BALL = 60; // oʻtish chegarasi (100 ball ichida)
+      const TIME_LIMIT_MIN = 0; // vaqt cheklovi (daqiqa). 0 = cheklovsiz
+
+      // ===== SAVOLLAR OMBORI =====
+      // OPEN = ochiq test (variantli). Format: [mavzu, savol, TOGʻRI javob, xato1, xato2, xato3]
+      //   Variantlar tartibi har safar aralashadi.
+      // CLOSED = yopiq savol (yozma). a: qabul qilinadigan javoblar, s: toʻgʻri javob (natijada koʻrsatiladi)
+      //   3 belgigacha boʻlgan javoblar (masalan, "ram") faqat butun soʻz sifatida tekshiriladi.
+      const VARIANTS = {
+        1: {
+          OPEN: [
+            [1, "Kompyuterning “miyasi” deb qaysi qismga aytiladi?", "Protsessor", "Monitor", "Klaviatura", "Printer"],
+            [1, "Stolli kompyuter (Desktop) uchun qaysi ta’rif toʻgʻri?", "Tizim bloki, monitor, klaviatura va sichqoncha alohida boʻladi", "Hammasi bitta korpusda va batareyada ishlaydi", "Faqat sensorli ekrandan iborat boʻladi", "Faqat serverlarda ishlatiladi"],
+            [1, "Kompyuterning toʻrt asosiy vazifasi qaysi javobda toʻgʻri koʻrsatilgan?", "Kiritish, qayta ishlash, saqlash, chiqarish", "Yozish, chizish, oʻchirish, yoqish", "Ochish, yopish, koʻchirish, oʻchirish", "Bosish, sudrash, tashlash, qoʻyish"],
+            [1, "Kompyuterning barcha qismlarini bir-biriga bogʻlaydigan asosiy plata qaysi?", "Ona plata (motherboard)", "Videokarta", "Klaviatura", "Kolonka"],
+            [2, "Quyidagilardan qaysi biri operatsion tizim emas?", "Chrome", "Linux", "Android", "iOS"],
+            [2, "Windows oynasidagi “Yigʻish” (−) tugmasi nima qiladi?", "Oynani vazifalar panelga tushiradi, dastur yopilmaydi", "Dasturni yopadi", "Oynani butun ekranga yoyadi", "Faylni oʻchiradi"],
+            [2, "Ochiq dasturlar orasida tez almashish uchun qaysi tugmalar ishlatiladi?", "Alt + Tab", "Ctrl + C", "Win + E", "F2"],
+            [2, "Dasturni kompyuterdan toʻgʻri oʻchirishning yoʻli qaysi?", "Sozlamalar → Ilovalar → Oʻchirish", "Belgisini Savatga tashlash", "Kompyuterni oʻchirish", "Rozetkadan sugʻurish"],
+            [3, "2048 MB necha GB ga teng?", "2 GB", "1 GB", "4 GB", "20 GB"],
+            [3, "“hisobot.docx” faylida kengaytma qaysi?", ".docx", "hisobot", "hisobot.docx", "docx.hisobot"],
+            [3, "Oxirgi bajarilgan amalni bekor qiladigan tugmalar qaysi?", "Ctrl + Z", "Ctrl + Y", "Ctrl + A", "F2"],
+            [3, "Faylni qayta nomlash uchun qaysi tugma ishlatiladi?", "F2", "F5", "Delete", "Esc"],
+            [3, "Fayl boshqaruvchisida yangi papka yaratish uchun qaysi tugmalar ishlatiladi?", "Ctrl + Shift + N", "Ctrl + S", "Ctrl + P", "Alt + F4"],
+            [4, "Quyidagilardan qaysi biri kiritish qurilmasi?", "Skaner", "Printer", "Monitor", "Kolonka"],
+            [4, "Fleshkani kompyuterdan xavfsiz olishning toʻgʻri usuli qaysi?", "“Chiqarish” (Eject) tugmasi orqali", "Darhol sugʻurib olish", "Kompyuterni oʻchirish", "Qayta yuklash"],
+            [4, "Kompyuterni proyektorga tasvir va tovush bilan ulash uchun qaysi port mos?", "HDMI", "Ethernet (LAN)", "Audio 3,5 mm", "Quvvat kirishi"],
+            [4, "Quyidagilardan qaysi biri tizim blokining ichida joylashmaydi?", "Monitor", "Protsessor", "RAM", "Ona plata"],
+            [5, "Quyidagilardan qaysi biri elektron pochta manzili?", "aziz.karimov@gmail.com", "www.mail.uz", "https://gmail.com", "Aziz Karimov"],
+            [5, "Elektron pochta xatiga fayl biriktirish uchun qaysi belgi ishlatiladi?", "Skrepka", "Qulf", "Savat", "Yulduzcha"],
+            [5, "Brauzerda sahifa ichidan soʻz qidirish uchun qaysi tugmalar ishlatiladi?", "Ctrl + F", "Ctrl + T", "Ctrl + D", "Ctrl + H"],
+            [5, "Qidiruv tizimida aniq iborani topish uchun uni nimaga olish kerak?", "Qoʻshtirnoq ichiga", "Qavs ichiga", "Katta harflarga", "Nuqtalar orasiga"],
+            [6, "Foydali dastur niqobi ostida kirib, zarar yetkazadigan dastur qaysi?", "Troyan", "Antivirus", "Brauzer", "Xavfsizlik devori (Firewall)"],
+            [6, "Fayllarni qulflab, ochish uchun pul talab qiladigan dastur turi qaysi?", "Ransomware", "Adware", "Antivirus", "Brauzer"],
+            [6, "Quyidagi parollardan qaysi biri eng kuchli?", "Itim-Rex-5-yoshda-quvnoq!", "12345678", "qwerty", "Aziz2012"],
+            [6, "Notanish fleshkani kompyuterga ulash nima uchun xavfli?", "Unda virus boʻlishi mumkin", "Kompyuter tezlashadi", "Fayllar koʻpayadi", "Monitor oʻchadi"],
+          ],
+          CLOSED: [
+            {"t": 1, "q": "Kompyuterda ishlayotgan dasturlar uchun vaqtinchalik xotira qisqartmasi:", "a": ["ram", "operativ xotira", "tezkor xotira"], "s": "RAM (operativ xotira)"},
+            {"t": 3, "q": "Faylni nusxalash uchun tezkor tugmalar (Ctrl + ...):", "a": ["ctrl c", "control c"], "s": "Ctrl + C"},
+            {"t": 3, "q": "1 KB necha baytga teng? (raqam bilan yozing)", "a": ["1024"], "s": "1024"},
+            {"t": 5, "q": "Veb-sahifalarni ochib koʻrsatadigan dastur nomi (bitta soʻz):", "a": ["brauzer", "browser", "brouzer"], "s": "Brauzer"},
+            {"t": 6, "q": "Zararli dasturlardan himoya qiladigan dastur turi:", "a": ["antivirus"], "s": "Antivirus"},
+          ],
+        },
+        2: {
+          OPEN: [
+            [1, "Kompyuter oʻchirilganda ichidagi maʼlumoti yoʻqoladigan xotira qaysi?", "RAM", "SSD", "HDD", "Fleshka"],
+            [1, "Tezligi GHz bilan oʻlchanadigan qism qaysi?", "Protsessor (CPU)", "Monitor", "Printer", "Kolonka"],
+            [1, "SSD ning HDD dan asosiy afzalligi nima?", "Harakatlanuvchi qismi yoʻq, tezroq ishlaydi", "Ichida aylanuvchi disk bor", "Faqat tovush chiqaradi", "Faqat tasvir koʻrsatadi"],
+            [1, "Smartfonni nima uchun kompyuter deb hisoblash mumkin?", "Ichida protsessor, xotira va operatsion tizim bor", "Ekrani katta", "Klaviaturasi bor", "Simi bor"],
+            [2, "Quyidagi juftliklardan qaysi biri toʻgʻri?", "iOS – Apple", "Windows – Google", "Android – Apple", "Linux – Microsoft"],
+            [2, "Ish stolidagi yorliq (Shortcut) oʻchirilsa, nima boʻladi?", "Dastur oʻchmaydi, faqat yorliq yoʻqoladi", "Dastur butunlay oʻchadi", "Kompyuter oʻchadi", "Barcha fayllar oʻchadi"],
+            [2, "Barcha oynalarni yigʻib, ish stolini koʻrsatadigan tugmalar qaysi?", "Win + D", "Win + E", "Win + I", "Alt + F4"],
+            [2, "Windows Sozlamalarini tez ochish uchun qaysi tugmalar ishlatiladi?", "Win + I", "Win + D", "Alt + Tab", "Ctrl + C"],
+            [3, "3 KB necha baytga teng?", "3072 bayt", "300 bayt", "1000 bayt", "30 bayt"],
+            [3, "Faylni bir joydan boshqa joyga koʻchirish uchun qaysi tugmalar ketma-ketligi ishlatiladi?", "Ctrl + X, keyin Ctrl + V", "Ctrl + C, keyin Ctrl + Z", "Ctrl + A, keyin Ctrl + S", "Ctrl + Y, keyin Ctrl + P"],
+            [3, "Faylning turini bildiradigan qismi qaysi?", "Kengaytma", "Nom", "Hajm", "Papka"],
+            [3, "Quyidagilardan qaysi biri rasm fayli kengaytmasi?", ".jpg", ".mp3", ".docx", ".zip"],
+            [3, "Savatga tushgan faylni qanday tiklash mumkin?", "Savatda faylga oʻng tugma → Tiklash", "Kompyuterni qayta yuklash", "Antivirus bilan", "Tiklab boʻlmaydi"],
+            [4, "Quyidagilardan qaysi biri chiqarish qurilmasi?", "Printer", "Skaner", "Mikrofon", "Sichqoncha"],
+            [4, "Quloqchinni ulash uchun odatda qaysi port ishlatiladi?", "Audio 3,5 mm", "Ethernet (LAN)", "Quvvat kirishi", "VGA"],
+            [4, "Qurilma ulanganda Windows uni oʻzi tanib, ishlatishga tayyorlaydigan texnologiya nomi qaysi?", "Plug and Play", "Copy and Paste", "Drag and Drop", "Click and Go"],
+            [4, "Monitorni koʻzdan qancha uzoqlikda tutish tavsiya etiladi?", "50–70 sm", "10–20 sm", "5 sm", "2 metr"],
+            [5, "Quyidagilardan qaysi biri qidiruv tizimi?", "Google", "Windows", "Word", "Paint"],
+            [5, "Elektron xatning “Kimga” (To) maydoniga nima yoziladi?", "Qabul qiluvchining pochta manzili", "Xat mavzusi", "Parol", "Fayl nomi"],
+            [5, "Brauzerda yopilib ketgan varaqani qaytarish uchun qaysi tugmalar ishlatiladi?", "Ctrl + Shift + T", "Ctrl + W", "Ctrl + D", "Ctrl + H"],
+            [5, "Brauzer manzil satridagi qulf belgisi nimani bildiradi?", "Sahifa himoyalangan (HTTPS) ulanish orqali ochilganini", "Saytga parol qoʻyilganini", "Sayt yopilganini", "Internet oʻchganini"],
+            [6, "Foydalanuvchini yashirincha kuzatib, maʼlumot yigʻadigan dastur qaysi?", "Spyware", "Adware", "Antivirus", "Brauzer"],
+            [6, "Tarmoqdan keladigan ruxsatsiz urinishlarni toʻsadigan himoya vositasi qaysi?", "Xavfsizlik devori (Firewall)", "Monitor", "Sichqoncha", "Printer"],
+            [6, "2FA nima?", "Parolga qoʻshimcha ikkinchi tasdiqlash", "Parolni ikki marta yozish", "Ikkita antivirus oʻrnatish", "Tizimga ikki marta kirish"],
+            [6, "Kompyuter ekranini tezda qulflash uchun qaysi tugmalar ishlatiladi?", "Win + L", "Win + D", "Ctrl + L", "Alt + F4"],
+          ],
+          CLOSED: [
+            {"t": 1, "q": "Protsessor qisqartmasi (inglizcha, 3 harf):", "a": ["cpu"], "s": "CPU"},
+            {"t": 2, "q": "Windows operatsion tizimini qaysi kompaniya ishlab chiqargan?", "a": ["microsoft", "maykrosoft", "mikrosoft"], "s": "Microsoft"},
+            {"t": 3, "q": "Axborotning eng kichik oʻlchov birligi nima?", "a": ["bit"], "s": "Bit"},
+            {"t": 4, "q": "Tasvirni ekranga chiqaradigan asosiy qurilma nomi:", "a": ["monitor", "ekran"], "s": "Monitor"},
+            {"t": 6, "q": "Soxta xat yoki sayt orqali parol va maʼlumotni aldab olish hujumi nomi (inglizcha):", "a": ["phishing", "fishing", "fisshing"], "s": "Phishing (fishing)"},
+          ],
+        },
+      };
+
+      // ===== YORDAMCHI FUNKSIYALAR =====
+      function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+      // Tanlangan variant savollarini tasodifiy tartibda tayyorlaydi
+      function buildQuiz(v) {
+        const V = VARIANTS[v];
+        const qs = [
+          ...V.OPEN.map((x) => ({
+            t: x[0],
+            q: x[1],
+            o: x.slice(2),
+            c: 0,
+            type: "choice",
+            ord: shuffle([0, 1, 2, 3]),
+          })),
+          ...V.CLOSED.map((x) => ({ ...x, type: "text" })),
+        ];
+        return shuffle(qs);
+      }
+      function norm(s) {
+        return String(s)
+          .toLowerCase()
+          .replace(/[ʻʼ‘’`´']/g, "")
+          .replace(/[^a-z0-9@\u0400-\u04ff]+/g, " ")
+          .trim();
+      }
+      function isRight(q, ans) {
+        if (ans == null || ans === "") return false;
+        if (q.type === "choice") return ans === q.c;
+        const n = norm(ans);
+        if (!n) return false;
+        const c = n.replace(/ /g, "");
+        return q.a.some((a) => {
+          const na = norm(a),
+            ca = na.replace(/ /g, "");
+          if (na.length <= 3) return (" " + n + " ").includes(" " + na + " ") || c === ca;
+          return n.includes(na) || c.includes(ca);
+        });
+      }
+
+      // ===== DOM =====
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) =>
+        String(s).replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      let Q = [],
+        TOTAL = 0,
+        cur = 0,
+        ans = [],
+        user = "",
+        variant = 0,
+        t0 = 0,
+        timer = null,
+        active = false;
+
+      document.querySelectorAll(".vbtn").forEach((b) => {
+        b.onclick = () => {
+          variant = +b.dataset.v;
+          document.querySelectorAll(".vbtn").forEach((x) => x.classList.toggle("sel", x === b));
+          $("err").textContent = "";
+        };
+      });
+      $("go").onclick = start;
+      $("name").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") start();
+      });
+      $("name").addEventListener("input", () => ($("err").textContent = ""));
+
+      function start() {
+        user = $("name").value.trim().replace(/\s+/g, " ");
+        if (!/^\S{2,}\s+\S{2,}/.test(user)) {
+          $("err").textContent = "Ism va familiyangizni toʻliq yozing (masalan: Aliyev Vali).";
+          $("name").focus();
+          return;
+        }
+        if (!variant) {
+          $("err").textContent = "Variantni tanlang.";
+          return;
+        }
+        Q = buildQuiz(variant);
+        TOTAL = Q.length;
+        ans = new Array(TOTAL).fill(null);
+        cur = 0;
+        $("start").classList.add("hide");
+        $("quiz").classList.remove("hide");
+        $("who").textContent = "👤 " + user + " • " + variant + "-variant";
+        t0 = Date.now();
+        active = true;
+        timer = setInterval(tick, 1000);
+        tick();
+        render();
+      }
+      function tick() {
+        const el = Math.floor((Date.now() - t0) / 1000);
+        let s = el,
+          pre = "⏱ ";
+        if (TIME_LIMIT_MIN > 0) {
+          s = TIME_LIMIT_MIN * 60 - el;
+          pre = "⏳ qoldi ";
+          if (s <= 0) {
+            finish();
+            return;
+          }
+        }
+        $("time").textContent =
+          pre + String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+      }
+
+      function render() {
+        const q = Q[cur];
+        $("cnt").textContent = "Savol " + (cur + 1) + " / " + TOTAL;
+        $("pb").style.width = ((cur + 1) / TOTAL) * 100 + "%";
+        let h =
+          '<span class="tag">' +
+          (q.type === "text" ? "Yopiq savol (yozma)" : "Ochiq test (variantli)") +
+          " • Mavzu " +
+          q.t +
+          "</span><h2>" +
+          esc(q.q) +
+          "</h2>";
+        if (q.type === "text") {
+          h +=
+            '<input type="text" id="inp" placeholder="Javobingizni yozing..." autocomplete="off" spellcheck="false" value="' +
+            esc(ans[cur] || "") +
+            '">';
+        } else {
+          q.ord.forEach((oi, k) => {
+            h +=
+              '<button class="opt' +
+              (ans[cur] === oi ? " sel" : "") +
+              '" data-o="' +
+              oi +
+              '">' +
+              "ABCD"[k] +
+              ") " +
+              esc(q.o[oi]) +
+              "</button>";
+          });
+        }
+        $("qbox").innerHTML = h;
+        if (q.type === "text") {
+          const inp = $("inp");
+          inp.focus();
+          inp.oninput = () => {
+            ans[cur] = inp.value.trim() || null;
+            dots();
+          };
+          inp.onkeydown = (e) => {
+            if (e.key === "Enter") next();
+          };
+        } else {
+          document.querySelectorAll(".opt").forEach(
+            (b) =>
+              (b.onclick = () => {
+                ans[cur] = +b.dataset.o;
+                render();
+              }),
+          );
+        }
+        $("prev").disabled = cur === 0;
+        $("next").textContent = cur === TOTAL - 1 ? "✔ Yakunlash" : "Keyingi →";
+        dots();
+      }
+      function dots() {
+        $("dots").innerHTML = Q.map(
+          (_, i) =>
+            '<b class="' +
+            (ans[i] != null ? "done " : "") +
+            (i === cur ? "cur" : "") +
+            '" data-i="' +
+            i +
+            '">' +
+            (i + 1) +
+            "</b>",
+        ).join("");
+        document.querySelectorAll("#dots b").forEach(
+          (b) =>
+            (b.onclick = () => {
+              cur = +b.dataset.i;
+              render();
+            }),
+        );
+      }
+      $("prev").onclick = () => {
+        if (cur > 0) {
+          cur--;
+          render();
+        }
+      };
+      $("next").onclick = next;
+      $("fin").onclick = askFinish;
+      function next() {
+        if (cur < TOTAL - 1) {
+          cur++;
+          render();
+          return;
+        }
+        askFinish();
+      }
+      function askFinish() {
+        const left = ans.filter((a) => a == null).length;
+        if (
+          left &&
+          !confirm("Hali " + left + " ta savolga javob bermadingiz. Baribir yakunlaysizmi?")
+        )
+          return;
+        finish();
+      }
+      window.addEventListener("beforeunload", (e) => {
+        if (active) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+
+      // ===== NATIJA =====
+      function finish() {
+        if (!active) return;
+        active = false;
+        clearInterval(timer);
+        const secs = Math.floor((Date.now() - t0) / 1000);
+        const ok = Q.map((q, i) => isRight(q, ans[i]));
+        const choiceOk = Q.filter((q, i) => q.type === "choice" && ok[i]).length;
+        const textOk = Q.filter((q, i) => q.type === "text" && ok[i]).length;
+        const nChoice = Q.filter((q) => q.type === "choice").length;
+        const nText = TOTAL - nChoice;
+        const total = choiceOk + textOk;
+        const ball = choiceOk * POINTS_CHOICE + textOk * POINTS_TEXT;
+        const maxBall = nChoice * POINTS_CHOICE + nText * POINTS_TEXT;
+        const grade =
+          ball >= 86
+            ? "A’lo 🏆"
+            : ball >= 71
+              ? "Yaxshi 👍"
+              : ball >= PASS_BALL
+                ? "Qoniqarli 🙂"
+                : "Mavzularni takrorlash kerak 📚";
+        const time = Math.floor(secs / 60) + " daq " + (secs % 60) + " son";
+        const passed = ball >= PASS_BALL;
+
+        let h =
+          '<div class="score"><p>' +
+          esc(user) +
+          " • " +
+          variant +
+          '-variant</p><div class="big">' +
+          ball +
+          '<span style="font-size:28px"> / ' +
+          maxBall +
+          " ball</span></div>" +
+          '<h2 style="margin-top:10px">' +
+          total +
+          " / " +
+          TOTAL +
+          " toʻgʻri • " +
+          grade +
+          "</h2>" +
+          '<p class="verdict ' +
+          (passed ? "y" : "n") +
+          '">' +
+          (passed
+            ? "✔ " + PASS_BALL + " ball chegarasidan oʻtdingiz"
+            : "✘ " + PASS_BALL + " ball chegarasiga yetmadingiz") +
+          "</p></div>";
+        h +=
+          '<div class="stats"><div>Ochiq test: <b>' +
+          choiceOk +
+          " / " +
+          nChoice +
+          "</b></div><div>Yopiq savol: <b>" +
+          textOk +
+          " / " +
+          nText +
+          "</b></div><div>Xato: <b>" +
+          (TOTAL - total) +
+          "</b></div><div>Vaqt: <b>" +
+          time +
+          "</b></div></div>";
+        h +=
+          '<div class="nav noprint" style="justify-content:center">' +
+          '<button class="sec" id="tb">Faqat xatolarni koʻrsatish</button>' +
+          '<button class="sec" id="cp">Natijani nusxalash</button>' +
+          '<button class="sec" onclick="window.print()">🖨 Chop etish</button>' +
+          '<button onclick="location.reload()">Qaytadan</button></div>';
+        h += '<div id="rv" style="margin-top:20px"><h2>Javoblar tahlili</h2>';
+        Q.forEach((q, i) => {
+          const right = q.type === "text" ? q.s : q.o[q.c];
+          const mine =
+            ans[i] == null
+              ? "— javob berilmagan —"
+              : q.type === "text"
+                ? ans[i]
+                : q.o[ans[i]];
+          h +=
+            '<div class="rv ' +
+            (ok[i] ? "ok" : "bad") +
+            '"><b>' +
+            (i + 1) +
+            ".</b> " +
+            esc(q.q) +
+            "<br><small>" +
+            (q.type === "text" ? "Yozma" : "Variantli") +
+            " • Mavzu " +
+            q.t +
+            '</small><br><span class="' +
+            (ok[i] ? "y" : "n") +
+            '">' +
+            (ok[i] ? "✔ Toʻgʻri" : "✘ Xato") +
+            "</span> — sizning javobingiz: <i>" +
+            esc(mine) +
+            "</i>" +
+            (ok[i] ? "" : "<br>Toʻgʻri javob: <b>" + esc(right) + "</b>") +
+            "</div>";
+        });
+        h += "</div>";
+        $("quiz").classList.add("hide");
+        $("res").classList.remove("hide");
+        $("res").innerHTML = h;
+        window.scrollTo(0, 0);
+        $("tb").onclick = () => {
+          const only = $("rv").classList.toggle("onlybad");
+          $("tb").textContent = only ? "Hamma javoblarni koʻrsatish" : "Faqat xatolarni koʻrsatish";
+        };
+        const summary =
+          user +
+          " | " +
+          variant +
+          "-variant | " +
+          total +
+          "/" +
+          TOTAL +
+          " toʻgʻri | " +
+          ball +
+          "/" +
+          maxBall +
+          " ball | " +
+          time;
+        $("cp").onclick = () => {
+          const done = () => ($("cp").textContent = "✔ Nusxalandi");
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(summary).then(done, () => fallbackCopy(summary, done));
+          } else fallbackCopy(summary, done);
+        };
+      }
+      function fallbackCopy(text, done) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          done();
+        } catch (e) {
+          prompt("Natijani nusxalang:", text);
+        }
+        document.body.removeChild(ta);
+      }
+    </script>
+  </body>
+</html>
